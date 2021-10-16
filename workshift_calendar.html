@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+    <link href="jquery-ui.css" rel="stylesheet">
+    <style>
+        body{
+		font-family: "Trebuchet MS", sans-serif;
+		margin: 50px;
+	}
+    form{
+        border: 1px solid gray;
+    }
+    label{
+        display:block !important;
+    }
+	#dialog-link {
+		padding: .4em 1em .4em 20px;
+		text-decoration: none;
+		position: relative;
+	}
+	#dialog-link span.ui-icon {
+		margin: 0 5px 0 0;
+		position: absolute;
+		left: .2em;
+		top: 50%;
+		margin-top: -8px;
+	}
+	#icons {
+		margin: 0;
+		padding: 0;
+	}
+	#icons li {
+		margin: 2px;
+		position: relative;
+		padding: 4px 0;
+		cursor: pointer;
+		float: left;
+		list-style: none;
+	}
+	#icons span.ui-icon {
+		float: left;
+		margin: 0 4px;
+	}
+	.fakewindowcontain .ui-widget-overlay {
+		position: absolute;
+	}
+        select {
+		width: 200px;
+	}
+    .formday{
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        border-width: 1px;
+        border-color: gray;
+        border-style: solid;
+    }
+    .div_M .ui-state-active{
+        background: green;
+    }
+    .div_P .ui-state-active{
+        background:greenyellow;
+    }
+    .btn_dwn{
+        background-color: greenyellow;
+        width: 100%;
+        height: 50px;
+        border-radius: 4px;
+        margin: 5px;
+    }
+    .btn_dwn:hover{
+        background-color: red;
+        border-style: solid;
+        border-width: 2px;
+        border-color: rosybrown;
+        cursor:pointer;
+        color: white;
+        
+    }
+    </style>
+</head>
+<body>
+    <h1>Seleziona i tuoi turni e scarica il calendario!</h1>
+    <div class="ui-widget">
+        <p>In questa pagina è possibile selezionare i turni e scaricare il file in formato ics importabile in tutti i calendari elettronici.</p>
+    </div>
+    <form id="formshift">
+    <fieldset>
+        <legend>Seleziona il mese</legend>
+        <table><tr><td><input type="button" value="<<" onclick="changeMonth(-1)" style="height: 50px;"></td><td>
+        <div id="controlgroup_anno">
+            <span style="width: 100px;     display: inline-block;">ANNO:</span>
+            <label id="sel-anno" style="display:inline !important">2020</label>
+            
+        </div>
+        <div id="controlgroup_mese">
+            <span style="width: 100px;     display: inline-block;">MESE:</span>
+            <select id="sel-mese">
+                <option value="01">Gennaio</option>
+                <option value="02">Febbraio</option>
+                <option value="03">Marzo</option>
+                <option value="04">Aprile</option>
+                <option value="05">Maggio</option>
+                <option value="06">Giugno</option>
+                <option value="07">Luglio</option>
+                <option value="08">Agosto</option>
+                <option value="09">Settembre</option>
+                <option value="10">Ottobre</option>
+                <option value="11">Novembre</option>
+                <option value="12">Dicembre</option>
+            </select>
+            
+        </div>
+    </td><td><input type="button" value=">>" onclick="changeMonth(1)" style="height: 50px;"></td></tr></table>
+    </fieldset>
+    <fieldset>
+        <legend>Seleziona i turni</legend>
+        <div class="formday">
+            <div name="headday" style="background-color: gray;">1</div>
+            <div id="radioset_day1">
+                <div class="div_M"><input type="radio" id="day1_radioM" name="day1" data-day=01 data-shift=M><label for="day1_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day1_radioP" name="day1" data-day=01 data-shift=P><label for="day1_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day1_radioN" name="day1" data-day=01 data-shift=N><label for="day1_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">2</div>
+            <div id="radioset_day2">
+                <div class="div_M"><input type="radio" id="day2_radioM" name="day2" data-day=02 data-shift=M><label for="day2_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day2_radioP" name="day2" data-day=02 data-shift=P><label for="day2_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day2_radioN" name="day2" data-day=02 data-shift=N><label for="day2_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">3</div>
+            <div id="radioset_day3">
+                <div class="div_M"><input type="radio" id="day3_radioM" name="day3" data-day=03 data-shift=M><label for="day3_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day3_radioP" name="day3" data-day=03 data-shift=P><label for="day3_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day3_radioN" name="day3" data-day=03 data-shift=N><label for="day3_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">4</div>
+            <div id="radioset_day4">
+                <div class="div_M"><input type="radio" id="day4_radioM" name="day4" data-day=04 data-shift=M><label for="day4_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day4_radioP" name="day4" data-day=04 data-shift=P><label for="day4_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day4_radioN" name="day4" data-day=04 data-shift=N><label for="day4_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">5</div>
+            <div id="radioset_day5">
+                <div class="div_M"><input type="radio" id="day5_radioM" name="day5" data-day=05 data-shift=M><label for="day5_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day5_radioP" name="day5" data-day=05 data-shift=P><label for="day5_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day5_radioN" name="day5" data-day=05 data-shift=N><label for="day5_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">6</div>
+            <div id="radioset_day6">
+                <div class="div_M"><input type="radio" id="day6_radioM" name="day6" data-day=06 data-shift=M><label for="day6_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day6_radioP" name="day6" data-day=06 data-shift=P><label for="day6_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day6_radioN" name="day6" data-day=06 data-shift=N><label for="day6_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">7</div>
+            <div id="radioset_day7">
+                <div class="div_M"><input type="radio" id="day7_radioM" name="day7" data-day=07 data-shift=M><label for="day7_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day7_radioP" name="day7" data-day=07 data-shift=P><label for="day7_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day7_radioN" name="day7" data-day=07 data-shift=N><label for="day7_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">8</div>
+            <div id="radioset_day8">
+                <div class="div_M"><input type="radio" id="day8_radioM" name="day8" data-day=08 data-shift=M><label for="day8_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day8_radioP" name="day8" data-day=08 data-shift=P><label for="day8_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day8_radioN" name="day8" data-day=08 data-shift=N><label for="day8_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">9</div>
+            <div id="radioset_day9">
+                <div class="div_M"><input type="radio" id="day9_radioM" name="day9" data-day=09 data-shift=M><label for="day9_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day9_radioP" name="day9" data-day=09 data-shift=P><label for="day9_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day9_radioN" name="day9" data-day=09 data-shift=N><label for="day9_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">10</div>
+            <div id="radioset_day10">
+                <div class="div_M"><input type="radio" id="day10_radioM" name="day10" data-day=10 data-shift=M><label for="day10_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day10_radioP" name="day10" data-day=10 data-shift=P><label for="day10_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day10_radioN" name="day10" data-day=10 data-shift=N><label for="day10_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">11</div>
+            <div id="radioset_day11">
+                <div class="div_M"><input type="radio" id="day11_radioM" name="day11" data-day=11 data-shift=M><label for="day11_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day11_radioP" name="day11" data-day=11 data-shift=P><label for="day11_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day11_radioN" name="day11" data-day=11 data-shift=N><label for="day11_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">12</div>
+            <div id="radioset_day12">
+                <div class="div_M"><input type="radio" id="day12_radioM" name="day12" data-day=12 data-shift=M><label for="day12_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day12_radioP" name="day12" data-day=12 data-shift=P><label for="day12_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day12_radioN" name="day12" data-day=12 data-shift=N><label for="day12_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">13</div>
+            <div id="radioset_day13">
+                <div class="div_M"><input type="radio" id="day13_radioM" name="day13" data-day=13 data-shift=M><label for="day13_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day13_radioP" name="day13" data-day=13 data-shift=P><label for="day13_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day13_radioN" name="day13" data-day=13 data-shift=N><label for="day13_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">14</div>
+            <div id="radioset_day14">
+                <div class="div_M"><input type="radio" id="day14_radioM" name="day14" data-day=14 data-shift=M><label for="day14_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day14_radioP" name="day14" data-day=14 data-shift=P><label for="day14_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day14_radioN" name="day14" data-day=14 data-shift=N><label for="day14_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">15</div>
+            <div id="radioset_day15">
+                <div class="div_M"><input type="radio" id="day15_radioM" name="day15" data-day=15 data-shift=M><label for="day15_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day15_radioP" name="day15" data-day=15 data-shift=P><label for="day15_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day15_radioN" name="day15" data-day=15 data-shift=N><label for="day15_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">16</div>
+            <div id="radioset_day16">
+                <div class="div_M"><input type="radio" id="day16_radioM" name="day16" data-day=16 data-shift=M><label for="day16_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day16_radioP" name="day16" data-day=16 data-shift=P><label for="day16_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day16_radioN" name="day16" data-day=16 data-shift=N><label for="day16_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">17</div>
+            <div id="radioset_day17">
+                <div class="div_M"><input type="radio" id="day17_radioM" name="day17" data-day=17 data-shift=M><label for="day17_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day17_radioP" name="day17" data-day=17 data-shift=P><label for="day17_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day17_radioN" name="day17" data-day=17 data-shift=N><label for="day17_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">18</div>
+            <div id="radioset_day18">
+                <div class="div_M"><input type="radio" id="day18_radioM" name="day18" data-day=18 data-shift=M><label for="day18_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day18_radioP" name="day18" data-day=18 data-shift=P><label for="day18_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day18_radioN" name="day18" data-day=18 data-shift=N><label for="day18_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">19</div>
+            <div id="radioset_day19">
+                <div class="div_M"><input type="radio" id="day19_radioM" name="day19" data-day=19 data-shift=M><label for="day19_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day19_radioP" name="day19" data-day=19 data-shift=P><label for="day19_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day19_radioN" name="day19" data-day=19 data-shift=N><label for="day19_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">20</div>
+            <div id="radioset_day20">
+                <div class="div_M"><input type="radio" id="day20_radioM" name="day20" data-day=20 data-shift=M><label for="day20_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day20_radioP" name="day20" data-day=20 data-shift=P><label for="day20_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day20_radioN" name="day20" data-day=20 data-shift=N><label for="day20_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">21</div>
+            <div id="radioset_day21">
+                <div class="div_M"><input type="radio" id="day21_radioM" name="day21" data-day=21 data-shift=M><label for="day21_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day21_radioP" name="day21" data-day=21 data-shift=P><label for="day21_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day21_radioN" name="day21" data-day=21 data-shift=N><label for="day21_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">22</div>
+            <div id="radioset_day22">
+                <div class="div_M"><input type="radio" id="day22_radioM" name="day22" data-day=22 data-shift=M><label for="day22_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day22_radioP" name="day22" data-day=22 data-shift=P><label for="day22_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day22_radioN" name="day22" data-day=22 data-shift=N><label for="day22_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">23</div>
+            <div id="radioset_day23">
+                <div class="div_M"><input type="radio" id="day23_radioM" name="day23" data-day=23 data-shift=M><label for="day23_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day23_radioP" name="day23" data-day=23 data-shift=P><label for="day23_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day23_radioN" name="day23" data-day=23 data-shift=N><label for="day23_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">24</div>
+            <div id="radioset_day24">
+                <div class="div_M"><input type="radio" id="day24_radioM" name="day24" data-day=24 data-shift=M><label for="day24_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day24_radioP" name="day24" data-day=24 data-shift=P><label for="day24_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day24_radioN" name="day24" data-day=24 data-shift=N><label for="day24_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">25</div>
+            <div id="radioset_day25">
+                <div class="div_M"><input type="radio" id="day25_radioM" name="day25" data-day=25 data-shift=M><label for="day25_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day25_radioP" name="day25" data-day=25 data-shift=P><label for="day25_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day25_radioN" name="day25" data-day=25 data-shift=N><label for="day25_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">26</div>
+            <div id="radioset_day26">
+                <div class="div_M"><input type="radio" id="day26_radioM" name="day26" data-day=26 data-shift=M><label for="day26_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day26_radioP" name="day26" data-day=26 data-shift=P><label for="day26_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day26_radioN" name="day26" data-day=26 data-shift=N><label for="day26_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">27</div>
+            <div id="radioset_day27">
+                <div class="div_M"><input type="radio" id="day27_radioM" name="day27" data-day=27 data-shift=M><label for="day27_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day27_radioP" name="day27" data-day=27 data-shift=P><label for="day27_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day27_radioN" name="day27" data-day=27 data-shift=N><label for="day27_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">28</div>
+            <div id="radioset_day28">
+                <div class="div_M"><input type="radio" id="day28_radioM" name="day28" data-day=28 data-shift=M><label for="day28_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day28_radioP" name="day28" data-day=28 data-shift=P><label for="day28_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day28_radioN" name="day28" data-day=28 data-shift=N><label for="day28_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">29</div>
+            <div id="radioset_day29">
+                <div class="div_M"><input type="radio" id="day29_radioM" name="day29" data-day=29 data-shift=M><label for="day29_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day29_radioP" name="day29" data-day=29 data-shift=P><label for="day29_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day29_radioN" name="day29" data-day=29 data-shift=N><label for="day29_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">30</div>
+            <div id="radioset_day30">
+                <div class="div_M"><input type="radio" id="day30_radioM" name="day30" data-day=30 data-shift=M><label for="day30_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day30_radioP" name="day30" data-day=30 data-shift=P><label for="day30_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day30_radioN" name="day30" data-day=30 data-shift=N><label for="day30_radioN">N</label></div>
+            </div>
+        </div>
+        <div class="formday">
+            <div name="headday">31</div>
+            <div id="radioset_day30">
+                <div class="div_M"><input type="radio" id="day31_radioM" name="day31" data-day=31 data-shift=M><label for="day31_radioM">M</label></div>
+                <div class="div_P"><input type="radio" id="day31_radioP" name="day31" data-day=31 data-shift=P><label for="day31_radioP">P</label></div>
+                <div class="div_N"><input type="radio" id="day31_radioN" name="day31" data-day=31 data-shift=N><label for="day31_radioN">N</label></div>
+            </div>
+        </div>
+    </fieldset>
+
+    <input type="button" value="Scarica il File ICS" onclick="generate_ics()" class="btn_dwn" >
+</form>
+    <script src="external/jquery/jquery.js"></script>
+    <script src="jquery-ui.js"></script>
+    <script>
+       $("input[type=radio]").checkboxradio();
+       $("div[name=headday]").attr("style","background-color: gray;color:white;text-align:center;");
+       var map_radiogroup =new Map();
+       $(".div_M").click(function(e){
+            var btn=$(this).children("input[type=radio]")[0];
+            map_radiogroup.set(btn.name,btn.checked);
+       });
+       $(".div_P").click(function(e){
+            var btn=$(this).children("input[type=radio]")[0];
+            map_radiogroup.set(btn.name,btn.checked);
+       });
+       $(".div_N").click(function(e){
+            var btn=$(this).children("input[type=radio]")[0];
+            map_radiogroup.set(btn.name,btn.checked);
+       });
+       $("input[type=radio]").click(function(e){
+           var nm = this.name;
+           if(map_radiogroup.get(nm)==true){
+            $("input[type=radio][name="+nm+"]").prop('checked', false).button("refresh");
+           }
+       });
+       
+       function addLoadEvent(func) {  
+        var oldonload = window.onload;  
+        if (typeof window.onload != 'function') {  
+            window.onload = func;  
+        } else {  
+            window.onload = function() {  
+            if (oldonload) {  
+                oldonload();  
+            }  
+            func();  
+            }  
+        }  
+        }  
+
+        addLoadEvent(function() {  
+        document.getElementById('sel-anno').innerHTML = new Date().getFullYear();
+        document.getElementById('sel-mese').value= ("00" + ((new Date().getMonth() + 1).toString())).slice(-2);
+        });  
+
+        function changeMonth(step){
+            let d = new Date($('#sel-anno').text(),$('#sel-mese').val()-1,1);
+            d.setMonth(d.getMonth() +step);
+            document.getElementById('sel-anno').innerHTML = d.getFullYear();
+            document.getElementById('sel-mese').value= ("00" + ((d.getMonth() + 1).toString())).slice(-2);
+        }
+    </script>
+    <script src="icsgenerator.min.js"></script>
+</body>
+</html>
