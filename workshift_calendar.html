@@ -372,7 +372,7 @@
     <script src="jquery-ui.js"></script>
     <script>
        $("input[type=radio]").checkboxradio();
-       $("div[name=headday]").attr("style","background-color: gray;color:white;text-align:center;");
+       //$("div[name=headday]").attr("style","background-color: gray;color:white;text-align:center;");
        var map_radiogroup =new Map();
        $(".div_M").click(function(e){
             var btn=$(this).children("input[type=radio]")[0];
@@ -410,6 +410,7 @@
         addLoadEvent(function() {  
         document.getElementById('sel-anno').innerHTML = new Date().getFullYear();
         document.getElementById('sel-mese').value= ("00" + ((new Date().getMonth() + 1).toString())).slice(-2);
+        changeMonth(0);
         });  
 
         function changeMonth(step){
@@ -417,6 +418,19 @@
             d.setMonth(d.getMonth() +step);
             document.getElementById('sel-anno').innerHTML = d.getFullYear();
             document.getElementById('sel-mese').value= ("00" + ((d.getMonth() + 1).toString())).slice(-2);
+            highlightWeekEnd(d);
+        }
+        function highlightWeekEnd(d){
+            $("div[name=headday]").each(function(){
+                let thisday = $(this).text();
+                d1 = new Date(d.getFullYear(),d.getMonth(),thisday);
+                if(d1.getDay() ==0 || d1.getDay() ==6){
+                    $(this).attr("style","background-color: lightgray;color:white;text-align:center;");
+                }
+                else{
+                    $(this).attr("style","background-color: gray;color:white;text-align:center;");
+                }
+            });
         }
     </script>
     <script src="icsgenerator.min.js"></script>
