@@ -49,7 +49,7 @@
 		width: 200px;
 	}
     .formday{
-        display: inline-block;
+        /*display: inline-block;*/
         padding: 0;
         margin: 0;
         border-width: 1px;
@@ -116,6 +116,28 @@
     </fieldset>
     <fieldset>
         <legend>Seleziona i turni</legend>
+        <div>
+            <table>
+                <tr>
+                    <td>M=</td>
+                    <td>07:00</td>
+                    <td>-</td>
+                    <td>14:00</td>
+                </tr>
+                <tr>
+                    <td>P=</td>
+                    <td>14:00</td>
+                    <td>-</td>
+                    <td>22:00</td>
+                </tr>
+                <tr>
+                    <td>N=</td>
+                    <td>22:00</td>
+                    <td>-</td>
+                    <td>07:00</td>
+                </tr>
+            </table>
+        </div>
         <div class="formday">
             <div name="headday" style="background-color: gray;">1</div>
             <div id="radioset_day1">
@@ -424,13 +446,21 @@
             $("div[name=headday]").each(function(){
                 let thisday = $(this).text();
                 d1 = new Date(d.getFullYear(),d.getMonth(),thisday);
-                if(d1.getDay() ==0 || d1.getDay() ==6){
-                    $(this).attr("style","background-color: lightgray;color:white;text-align:center;");
-                }
-                else{
-                    $(this).attr("style","background-color: gray;color:white;text-align:center;");
+                if (thisday > daysInMonth(d.getMonth()+1,d.getFullYear())){
+                    $(this).parent().attr("style","display: none;");
+                }else{
+                    $(this).parent().attr("style","display: inline-block;");
+                    if(d1.getDay() ==0 || d1.getDay() ==6){
+                        $(this).attr("style","background-color: lightgray;color:white;text-align:center;");
+                    }
+                    else{
+                        $(this).attr("style","background-color: gray;color:white;text-align:center;");
+                    }
                 }
             });
+        }
+        function daysInMonth (month, year) {
+            return new Date(year, month, 0).getDate();
         }
     </script>
     <script src="icsgenerator.min.js"></script>
