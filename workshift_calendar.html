@@ -96,7 +96,7 @@
         </div>
         <div id="controlgroup_mese">
             <span style="width: 100px;     display: inline-block;">MESE:</span>
-            <select id="sel-mese">
+            <select id="sel-mese" onchange="changeMonth(0)">
                 <option value="01">Gennaio</option>
                 <option value="02">Febbraio</option>
                 <option value="03">Marzo</option>
@@ -434,7 +434,7 @@
         document.getElementById('sel-mese').value= ("00" + ((new Date().getMonth() + 1).toString())).slice(-2);
         changeMonth(0);
         });  
-
+        
         function changeMonth(step){
             let d = new Date($('#sel-anno').text(),$('#sel-mese').val()-1,1);
             d.setMonth(d.getMonth() +step);
